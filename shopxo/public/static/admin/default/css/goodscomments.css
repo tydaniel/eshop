@@ -1,0 +1,49 @@
+/**
+ * 用户信息
+ */
+.content-right .user-info img {
+    max-width: 35px;
+    max-height: 35px;
+}
+.content-right .user-info p {
+    margin: 0;
+}
+
+/**
+ * 商品信息
+ */
+.content-right .goods-info .base {
+    min-height: 57px;
+}
+.content-right .goods-info img {
+    width: 55px;
+    height: 55px;
+    margin: 2px 5px 0px 0;
+}
+
+/**
+ * 列表
+ */
+.content-right table.am-table .am-slider {
+    width: 100px;
+    max-height: 108px;
+    overflow: hidden;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+.content-right table.am-table .reply-content {
+    max-height: 80px;
+}
+
+/**
+ * 编辑
+ */
+.content-right .am-alert.goods-info a {
+    color: #0e90d2;
+}
+.content-right .am-alert p.title {
+    font-weight: 700;
+    font-size: 14px;
+    margin: 0 0 5px 0;
+    color: #888;
+}
