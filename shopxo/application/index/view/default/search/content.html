@@ -1,7 +1,7 @@
 {{if !empty($data)}}
     {{foreach $data as $v}}
         <li class="am-animation-scale-up">
-            <div class="items am-padding-bottom-xs">
+            <div class="items am-padding-bottom-xs goods-detail" data-spec-detail-ajax-url="{{:MyUrl('index/goods/specdetail')}}" data-spec-type-ajax-url="{{:MyUrl('index/goods/spectype')}}">
                 <a href="{{$v.goods_url}}" target="_blank" class="am-block">
                     <!-- 搜索页面商品信息顶部钩子 -->
                     {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true and (!isset($is_footer) or $is_footer eq 1)}}
@@ -60,6 +60,69 @@
                 <p class="price am-padding-horizontal-xs am-text-truncate">
                     <strong>{{$price_symbol}}{{$v.price}}</strong>
                 </p>
+
+                <!-- 规格选择，购买数量选择，加入购物车-->
+                <div class="quickbuy">
+                    <div class="theme-signin-left">
+                        {{if !empty($v['spec_base'])}}
+                        {{foreach $v['spec_base'] as $key=>$spec}}
+                        <div class="theme-options sku-items-{{$v['id']}}">
+                            <ul>
+                                <li class="sku-dont-choose">{{$spec.title}}</li>
+                                {{foreach $spec.value as $keys=>$value}}
+                                <li class="sku-line" data-type-value="{{$spec.title}}" data-value="{{$value}}" data-id="{{$v['id']}}">
+                                    {{$value}}<i></i></li>
+                                {{/foreach}}
+                            </ul>
+                        </div>
+                        {{/foreach}}
+                        {{/if}}
+                        <div class="theme-options">
+                            <div class="cart-title number">数量</div>
+                            <dd>
+                                <div class="am-input-group am-input-group-sm number-tag">
+                                    <button class="am-input-group-label min" data-id="{{$v['id']}}" type="button">-</button>
+                                    <input type="number" class="am-form-field" value="{{$v.buy_min_number}}" id="inputbox-{{$v['id']}}"
+                                           data-id="{{$v['id']}}" min="{{$v.buy_min_number}}" max="{{if empty($v['buy_max_number'])}}{{$v.inventory}}{{else /}}{{$v.buy_max_number}}{{/if}}"
+                                           data-original-max="{{$v.inventory}}" />
+                                    <button class="am-input-group-label add" data-id="{{$v['id']}}" type="button">+</button>
+                                </div>
+                                <span class="tb-hidden stock-tips">库存
+                                        <span class="stock-{{$v['id']}}"
+                                              data-original-stock="{{$v.inventory}}"
+                                              data-min-limit="{{$v.buy_min_number}}"
+                                              data-max-limit="{{$v.buy_max_number}}"
+                                              data-unit="{{$v.inventory_unit}}">
+                                            {{$v.inventory}}
+                                        </span>{{$v.inventory_unit}}
+                                </span>
+                            </dd>
+                        </div>
+                        <!-- 购买导航 -->
+                        <div class="buy-nav {{if $common_site_type eq 1}}exhibition-nav{{/if}}">
+                            {{if !empty($v.is_shelves)}}
+                            {{if $v['inventory'] gt 0}}
+                            <div class="submit">
+                                <div class="clearfix tb-btn tb-btn-basket buy-event login-event cart-submit"
+                                     data-type="cart"
+                                     data-id="{{$v['id']}}"
+                                     onclick="CartAdd($(this))"
+                                     data-ajax-url="{{:MyUrl('index/Cart/Save')}}">
+                                    <button class="joincart" title="加入购物车" href="javascript:;" type="button"><i></i>加入购物车</button>
+                                </div>
+                            </div>
+                            {{else /}}
+                            <p class="goods-not-buy-tips">商品卖光了</p>
+                            {{/if}}
+                            {{/if}}
+                            {{if $v.is_shelves neq 1}}
+                            <p class="goods-not-buy-tips">商品已下架</p>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+                <!-- 规格选择，购买数量选择，加入购物车 -->
+
 
                 <!-- 搜索页面商品信息底部钩子 -->
                 {{if isset($shopxo_is_develop) and $shopxo_is_develop eq true and (!isset($is_footer) or $is_footer eq 1)}}
