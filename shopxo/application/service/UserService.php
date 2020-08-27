@@ -1022,6 +1022,13 @@ class UserService
             return $verify;
         }
 
+
+
+
+
+
+
+
         // 获取用户账户信息
         $where = array('username|mobile|email' => $params['accounts'], 'is_delete_time'=>0);
         $user = Db::name('User')->field('id,pwd,salt,status')->where($where)->find();
