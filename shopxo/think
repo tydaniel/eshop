@@ -21,3 +21,5 @@ Container::get('app')->path(__DIR__ . '/application/')->initialize();
 // 控制台初始化
 Console::init();
 
+;;;
+
